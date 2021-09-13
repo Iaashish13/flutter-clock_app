@@ -2,6 +2,7 @@ import 'package:clock_app/constants.dart';
 import 'package:clock_app/models/enums.dart';
 import 'package:clock_app/list.dart';
 import 'package:clock_app/models/menu_info.dart';
+import 'package:clock_app/screens/alarm_page.dart';
 import 'package:clock_app/screens/clock_page.dart';
 
 import 'package:flutter/material.dart';
@@ -36,14 +37,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Consumer<MenuInfo>(
               builder: (
                 context,
-                menuInfo,
+                MenuInfo value,
                 Widget? child,
               ) {
-                if (menuInfo.menuType != MenuType.clock)
+                if (value.menuType == MenuType.clock)
+                  return ClockPage();
+                else if (value.menuType == MenuType.alarm)
+                  return AlarmPage();
+                else
                   return Container(
                     color: Colors.black,
                   );
-                return ClockPage();
               },
             ),
           ),

@@ -1,8 +1,9 @@
 import 'package:clock_app/constants.dart';
+import 'package:clock_app/widgets/digitalclock.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'clock_view_screen.dart';
+import '../widgets/clock_view_screen.dart';
 
 class ClockPage extends StatefulWidget {
   const ClockPage({Key? key}) : super(key: key);
@@ -14,7 +15,6 @@ class ClockPage extends StatefulWidget {
 class _ClockPageState extends State<ClockPage> {
   @override
   Widget build(BuildContext context) {
-    var formattedTime = DateFormat.Hm().format(DateTime.now());
     var formattedDate = DateFormat.yMMMMEEEEd().format(DateTime.now());
     var timezoneString =
         DateTime.now().timeZoneOffset.toString().split('.').first;
@@ -48,14 +48,7 @@ class _ClockPageState extends State<ClockPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  formattedTime,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 64.0,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
+                DigitalClockWidget(),
                 SizedBox(
                   height: 16.0,
                 ),
