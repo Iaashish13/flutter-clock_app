@@ -1,6 +1,5 @@
 import 'package:clock_app/alarm_helper.dart';
 import 'package:clock_app/constants.dart';
-import 'package:clock_app/list.dart';
 import 'package:clock_app/models/alarm_info.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -20,6 +19,8 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
+  final sound = 'test_sound.wav';
+
   AlarmHelper _alarmHelper = AlarmHelper();
   String? _alarmTimeString;
   DateTime? _alarmTime;
@@ -316,17 +317,22 @@ class _AlarmPageState extends State<AlarmPage> {
   Future<void> scheduledNotification(DateTime dateTime) async {
     flutterLocalNotificationsPlugin.zonedSchedule(
       0,
-      'Office',
+      'Alarm',
       'Alarm Time',
       tz.TZDateTime.from(dateTime, tz.local),
       NotificationDetails(
         android: AndroidNotificationDetails(
-          'channel id',
+          'channel id 50',
           'channel name',
           'channel description',
           importance: Importance.max,
+          sound: RawResourceAndroidNotificationSound(sound.split('.').first),
+          priority: Priority.high,
+          enableVibration: false,
         ),
-        iOS: IOSNotificationDetails(),
+        iOS: IOSNotificationDetails(
+          sound: sound,
+        ),
       ),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -334,38 +340,6 @@ class _AlarmPageState extends State<AlarmPage> {
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
-  // Future<void> scheduledNotification(DateTime dateTime) async {
-  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-  //       AndroidNotificationDetails('repeating channle id',
-  //           'repeating channel name', 'repeating channel description');
-  //   const IOSNotificationDetails iosPlatformChannelSpecifics =
-  //       IOSNotificationDetails(
-  //     presentSound: true,
-  //     presentBadge: true,
-  //     presentAlert: true,
-  //   );
-  //   const NotificationDetails platformChannelSpecifics = NotificationDetails(
-  //       android: androidPlatformChannelSpecifics,
-  //       iOS: iosPlatformChannelSpecifics);
-  //   await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
-  //       'repeating body', RepeatInterval.daily, platformChannelSpecifics,
-  //       androidAllowWhileIdle: true);
-  // }
-  // Future<void> scheduledNotification(DateTime dateTime) async {
-  //   flutterLocalNotificationsPlugin.zonedSchedule(
-  //       0,
-  //       'Alarm',
-  //       'My Alarm',
-  //       _dailyScheduledTime(dateTime),
-  //       NotificationDetails(
-  //           android: AndroidNotificationDetails(
-  //               'channel id', 'channel name', 'channel description',
-  //               importance: Importance.max)),
-  //       uiLocalNotificationDateInterpretation:
-  //           UILocalNotificationDateInterpretation.absoluteTime,
-  //       androidAllowWhileIdle: true,
-  //       matchDateTimeComponents: DateTimeComponents.time);
-  // }
 
   void onSaveAlarm() {
     DateTime? scheduledAlarmTime;

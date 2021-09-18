@@ -45,6 +45,7 @@ class _ClockPageState extends State<ClockPage> {
           ),
           Flexible(
             flex: 2,
+            fit: FlexFit.tight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

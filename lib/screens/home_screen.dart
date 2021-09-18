@@ -4,6 +4,8 @@ import 'package:clock_app/list.dart';
 import 'package:clock_app/models/menu_info.dart';
 import 'package:clock_app/screens/alarm_page.dart';
 import 'package:clock_app/screens/clock_page.dart';
+import 'package:clock_app/screens/stopwatch_page.dart';
+import 'package:clock_app/screens/timer_page.dart';
 
 import 'package:flutter/material.dart';
 
@@ -32,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
           VerticalDivider(
             color: Colors.white30,
             width: 1.0,
+            indent: 35.0,
+            endIndent: 0,
           ),
           Expanded(
             child: Consumer<MenuInfo>(
@@ -44,10 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   return ClockPage();
                 else if (value.menuType == MenuType.alarm)
                   return AlarmPage();
+                else if (value.menuType == MenuType.timer)
+                  return TimerPage();
                 else
-                  return Container(
-                    color: Colors.black,
-                  );
+                  return StopwatchPage();
               },
             ),
           ),
